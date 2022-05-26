@@ -85,7 +85,11 @@ export default function Data() {
 										</h4>
 									</div>
 									<div className='cell'>
-										<h4>Words 4-6</h4>
+										<h4>
+											{point.keywords
+												? `${point.keywords[0]}, ${point.keywords[1]}, ${point.keywords[2]}`
+												: '3-4'}
+										</h4>
 									</div>
 									<div className='cell'>
 										<h4>{point.manifesto}</h4>
