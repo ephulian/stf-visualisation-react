@@ -3,6 +3,7 @@ import { randInRange, getObjFromArr } from './utils';
 
 export default function Matrix({ manifestos }) {
 	const text = Array.from(Array(100).keys());
+	// const text = manifestos;
 
 	const requestRef = useRef();
 	const [frames, setFrames] = useState(0);
@@ -14,28 +15,14 @@ export default function Matrix({ manifestos }) {
 	const [slicedRefs, setSlicedRefs] = useState([]);
 
 	const [animSpeed, setAnimSpeed] = useState(2);
-	const [trail, setTrail] = useState(10);
-	const [density, setDensity] = useState(14);
+	const [trail, setTrail] = useState(6);
+	const [density, setDensity] = useState(5);
 	const [spaceBetween, setSpaceBetween] = useState(0);
 	const [backgroundCol, setBackgroundCol] = useState('#ffffff');
 	const [symbolsCol, setSymbolsCol] = useState('#000000');
 
 	const [randomise, setRandomise] = useState(true);
-
-	// const refs = useRef(new Array(density).fill(null).map(() => createRef()));
-	// console.log(animSpeed);
-
-	// const text = manifestos;
-	// const text = Array.from(Array(100).keys());
-	// const refs = new Array(density).fill(null).map(() => createRef());
-
-	// Frames clock
-	// const animate = () => {
-	// 	setFrames((prevState) =>
-	// 		prevState < 60 ? (prevState += parseInt(animSpeed)) : (prevState = 0)
-	// 	);
-	// 	requestRef.current = requestAnimationFrame(animate);
-	// };
+	const [controller, setController] = useState('flex');
 
 	const handleChange = (e) => {
 		e.preventDefault();
@@ -76,16 +63,15 @@ export default function Matrix({ manifestos }) {
 			case 'animation-pause':
 				animPaused ? setPause(false) : setPause(true);
 				break;
+			case 'ok':
+				controller === 'flex' ? setController('none') : setController('flex');
+				break;
+			case undefined:
+				controller === 'flex' ? setController('none') : setController('flex');
+				break;
 			default:
 		}
 	};
-
-	// const animate = () => {
-	// 	setFrames((prevState) =>
-	// 		prevState < 60 ? (prevState += parseInt(animSpeed)) : (prevState = 0)
-	// 	);
-	// 	requestRef.current = requestAnimationFrame(animate);
-	// };
 
 	useEffect(() => {
 		const animate = () => {
@@ -107,9 +93,8 @@ export default function Matrix({ manifestos }) {
 						.map((_, i) => allElRefs[i] || createRef())
 				);
 
+				// Slice all refs to allow text density adjustment
 				setSlicedRefs(allElRefs.slice(-density));
-
-				// const refs = allElRefs.slice(density);
 				slicedRefs.forEach((ref) => {
 					// Assign random X and Y values between 0 and window H/W
 					let currentYPos = randInRange(window.innerHeight);
@@ -170,7 +155,6 @@ export default function Matrix({ manifestos }) {
 				});
 			}
 		}
-		// }, [frames, density, allElRefs, slicedRefs, animPaused, positions, text.length]);
 	}, [frames]);
 
 	// Loop over to beggining if number exceeds array length
@@ -181,7 +165,13 @@ export default function Matrix({ manifestos }) {
 
 	return (
 		<>
-			<div style={{ background: `${backgroundCol}` }} className='canvas-container'>
+			<div
+				style={{ background: `${backgroundCol}` }}
+				// onClick={(e) => console.log(e.currentTarget)}
+				onClick={(e) => handleChange(e)}
+				name='canvas'
+				className='canvas-container'
+			>
 				{' '}
 				{slicedRefs.map((ref, index) => {
 					return (
@@ -215,7 +205,7 @@ export default function Matrix({ manifestos }) {
 					);
 				})}
 			</div>
-			<form className='controller-wrapper' id='controller'>
+			<form className='controller-wrapper' style={{ display: `${controller}` }} id='controller'>
 				{/* <div class='single-input'>
 					<label for='falling-speed'>Falling Speed</label>
 					<input type='range' value='10' id='falling-speed' name='falling-speed' min='0' max='30' />
@@ -333,26 +323,20 @@ export default function Matrix({ manifestos }) {
 					<input
 						name='randomise'
 						checked={randomise}
-						onClick={(e) => handleChange(e)}
+						onChange={(e) => handleChange(e)}
 						type='checkbox'
 					/>
 					<label htmlFor='randomise'>Pause</label>
 					<input
 						name='animation-pause'
 						checked={animPaused}
-						onClick={(e) => handleChange(e)}
+						onChange={(e) => handleChange(e)}
 						type='checkbox'
 					/>
 				</span>
 				{/* <div className='single-input'></div>
 				<div class='single-input'></div> */}
-				<button
-					className='ok'
-					onClick={(e) => {
-						e.preventDefault();
-					}}
-					id='ok-btn'
-				>
+				<button className='ok' name='ok' onClick={(e) => handleChange(e)} id='ok-btn'>
 					OK
 				</button>
 			</form>
