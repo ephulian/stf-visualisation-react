@@ -102,6 +102,35 @@ h1 {
 	line-height: 15px;
 }
 
+.table {
+	border-top: 1px solid black;
+	border-right: 1px solid black;
+	border-bottom: 1px solid black;
+	margin: 15px;
+}
+
+.row {
+	display: grid;
+	grid-template-columns: 10% 15% 15% 44% 12% 3%;
+	flex-grow: 1;
+	justify-content: space-between;
+	min-height: 35px;
+}
+
+.cell {
+	border-left: 1px solid black;
+	border-bottom: 1px solid black;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+h4 {
+	font-weight: 400;
+	/* border-right: 1px solid black; */
+}
+
 .specs {
 	/* display: flex; */
 	/* flex-direction: column; */

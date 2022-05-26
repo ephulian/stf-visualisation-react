@@ -2,8 +2,8 @@ import React, { createRef, useEffect, useRef, useState } from 'react';
 import { randInRange, getObjFromArr } from './utils';
 
 export default function Matrix({ manifestos }) {
-	const text = Array.from(Array(100).keys());
-	// const text = manifestos;
+	// const text = Array.from(Array(100).keys());
+	const text = manifestos;
 
 	const requestRef = useRef();
 	const [frames, setFrames] = useState(0);

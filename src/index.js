@@ -6,7 +6,6 @@ import Matrix from './Matrix';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 	<React.StrictMode>
-		{/* <Matrix /> */}
 		<App />
 	</React.StrictMode>
 );

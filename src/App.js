@@ -3,6 +3,8 @@ import { collection, onSnapshot } from 'firebase/firestore';
 import { db } from './firebase-config';
 import './App.css';
 import Matrix from './Matrix';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Data from './Data';
 
 //
 
@@ -24,12 +26,13 @@ function App() {
 	}, []);
 
 	return (
-		<>
-			{/* <h1>{loading}</h1> */}
-			{loading ? 'Loading...' : <Matrix manifestos={manifestos} />}
-			{/* {manifestos} */}
-			{/* <button onClick={console.log(manifestos)}>click</button> */}
-		</>
+		<Router>
+			<Routes>
+				<Route path='/' element={loading ? 'Loading...' : <Matrix manifestos={manifestos} />} />
+				<Route path='/data' element={<Data />} />
+				{/* {loading ? 'Loading...' : <Matrix manifestos={manifestos} />} */}
+			</Routes>
+		</Router>
 	);
 }
 
