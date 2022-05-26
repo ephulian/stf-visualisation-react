@@ -116,13 +116,18 @@ export default function Matrix({ manifestos }) {
 					setPositions((prevState) => {
 						return { ...prevState, [ref.current.id]: { x: currentXPos, y: currentYPos } };
 					});
-					setPhrase((prevState) => {
-						return {
-							...prevState,
-							[ref.current.id]:
-								prevState[ref.current.id] > 0 ? (prevState[ref.current.id] -= 1) : text.length - 1,
-						};
-					});
+
+					if (randomise) {
+						setPhrase((prevState) => {
+							return {
+								...prevState,
+								[ref.current.id]:
+									prevState[ref.current.id] > 0
+										? (prevState[ref.current.id] -= 1)
+										: text.length - 1,
+							};
+						});
+					}
 
 					// If less than device height add, else reset
 					if (
@@ -180,73 +185,28 @@ export default function Matrix({ manifestos }) {
 						<div ref={ref} key={index} id={index} className='single-stream'>
 							<div className=''>
 								{/* Create array with length of trail and fill with h1 with decreasing opacities */}
-								{randomise
-									? Array.from({ length: trail }, (v, k) => k + 1)
-											.reverse()
-											.map((el, ind) => {
-												return (
-													<h1
-														key={el}
-														style={{
-															opacity: `${(1 / (el + 1)).toFixed(2)}`,
-															// opacity: `0.${el - 1}`,
-															marginTop: `${spaceBetween}px`,
-															color: `${symbolsCol}`,
-														}}
-													>
-														{text[addDifferent(text.length, index, el)]}
-													</h1>
-												);
-											})
-									: Array.from({ length: trail }, (v, k) => k + 1)
-											.reverse()
-											.map((el, ind) => {
-												return (
-													<h1
-														key={el}
-														style={{
-															opacity: `${(1 / (el + 1)).toFixed(2)}`,
-															// opacity: `0.${el - 1}`,
-															marginTop: `${spaceBetween}px`,
-															color: `${symbolsCol}`,
-														}}
-													>
-														{text[addDifferent(text.length, index, 0)]}
-													</h1>
-												);
-											})}
-								{
-									// Array.from({ length: trail }, (v, k) => k + 1)
-									// 	.reverse()
-									// 	.map((el, ind) => {
-									// 		return (
-									// 			<h1
-									// 				key={el}
-									// 				style={{
-									// 					opacity: `${(1 / (el + 1)).toFixed(2)}`,
-									// 					// opacity: `0.${el - 1}`,
-									// 					marginTop: `${spaceBetween}px`,
-									// 					color: `${symbolsCol}`,
-									// 				}}
-									// 			>
-									// 				{text[addDifferent(text.length, index, el)]}
-									// 			</h1>
-									// 		);
-									// 	})
-								}
-								{randomise ? (
-									<h1
-										style={{ opacity: '1', marginTop: `${spaceBetween}px`, color: `${symbolsCol}` }}
-									>
-										{text[phrase[`${index}`]]}
-									</h1>
-								) : (
-									<h1
-										style={{ opacity: '1', marginTop: `${spaceBetween}px`, color: `${symbolsCol}` }}
-									>
-										{text[phrase[`${index}`]]}
-									</h1>
-								)}
+								{Array.from({ length: trail }, (v, k) => k + 1)
+									.reverse()
+									.map((el, ind) => {
+										return (
+											<h1
+												key={el}
+												style={{
+													opacity: `${(1 / (el + 1)).toFixed(2)}`,
+													// opacity: `0.${el - 1}`,
+													marginTop: `${spaceBetween}px`,
+													color: `${symbolsCol}`,
+												}}
+											>
+												{text[addDifferent(text.length, index, randomise ? el : 0)]}
+											</h1>
+										);
+									})}
+								<h1
+									style={{ opacity: '1', marginTop: `${spaceBetween}px`, color: `${symbolsCol}` }}
+								>
+									{text[phrase[`${index}`]]}
+								</h1>
 							</div>
 						</div>
 					);
