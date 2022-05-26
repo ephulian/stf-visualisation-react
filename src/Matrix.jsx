@@ -73,6 +73,9 @@ export default function Matrix({ manifestos }) {
 			case 'randomise':
 				randomise ? setRandomise(false) : setRandomise(true);
 				break;
+			case 'animation-pause':
+				animPaused ? setPause(false) : setPause(true);
+				break;
 			default:
 		}
 	};
@@ -334,7 +337,12 @@ export default function Matrix({ manifestos }) {
 						type='checkbox'
 					/>
 					<label htmlFor='randomise'>Pause</label>
-					<input name='Pause' type='checkbox' />
+					<input
+						name='animation-pause'
+						checked={animPaused}
+						onClick={(e) => handleChange(e)}
+						type='checkbox'
+					/>
 				</span>
 				{/* <div className='single-input'></div>
 				<div class='single-input'></div> */}
@@ -342,8 +350,6 @@ export default function Matrix({ manifestos }) {
 					className='ok'
 					onClick={(e) => {
 						e.preventDefault();
-						// animPaused ? setPause(false) : setPause(true);
-						// console.log(animPaused);
 					}}
 					id='ok-btn'
 				>
