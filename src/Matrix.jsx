@@ -2,16 +2,15 @@ import React, { createRef, useEffect, useRef, useState } from 'react';
 import { randInRange, getObjFromArr } from './utils';
 
 export default function Matrix({ manifestos }) {
-	// const text = Array.from(Array(100).keys());
-	const text = manifestos;
+	const numbers = Array.from(Array(100).keys());
 
 	const requestRef = useRef();
 	const [frames, setFrames] = useState(0);
 	const [positions, setPositions] = useState({});
-	const [phrase, setPhrase] = useState(getObjFromArr(text));
 	const [animPaused, setPause] = useState(false);
 
 	const [streamRefs, setStreamRefs] = useState([]);
+	const [last, setLast] = useState(50);
 
 	const [animSpeed, setAnimSpeed] = useState(2);
 	const [trail, setTrail] = useState(8);
@@ -23,6 +22,9 @@ export default function Matrix({ manifestos }) {
 	const [randomise, setRandomise] = useState(false);
 	const [controller, setController] = useState('flex');
 
+	const text = manifestos.slice(-last);
+	// const text = numbers.slice(-last);
+	const [phrase, setPhrase] = useState(getObjFromArr(text));
 	const handleChange = (e) => {
 		e.preventDefault();
 		switch (e.currentTarget.name) {
@@ -50,6 +52,12 @@ export default function Matrix({ manifestos }) {
 			case 'space-between-decrease':
 				setSpaceBetween((currentSpaceBetween) => (currentSpaceBetween -= 1));
 				break;
+			case 'last-manifestos-increase':
+				setLast((currentLast) => (currentLast += 1));
+				break;
+			case 'last-manifestos-decrease':
+				setLast((currentLast) => (currentLast -= 1));
+				break;
 			case 'symbols-color':
 				setSymbolsCol(e.currentTarget.value);
 				break;
@@ -72,8 +80,8 @@ export default function Matrix({ manifestos }) {
 		}
 	};
 
-	// Loop over to beggining if number exceeds array length
-	const addDifferent = (arrayLength, ind, num) => {
+	// Pick random index within the array length, loop over to beggining if number exceeds array length
+	const pickRandomIndex = (arrayLength, ind, num) => {
 		const randomIndex = phrase[`${ind}`] + num;
 		return ((randomIndex % arrayLength) + arrayLength) % arrayLength;
 	};
@@ -197,7 +205,7 @@ export default function Matrix({ manifestos }) {
 													color: `${symbolsCol}`,
 												}}
 											>
-												{text[addDifferent(text.length, index, randomise ? el : 0)]}
+												{text[pickRandomIndex(text.length, index, randomise ? el : 0)]}
 											</h1>
 										);
 									})}
@@ -227,6 +235,8 @@ export default function Matrix({ manifestos }) {
 					Text Density: {density}
 					<br />
 					Space Between: {spaceBetween}
+					<br />
+					Last: {last}
 					<br />
 					<br />
 					{/* Frames: {frames} */}
@@ -300,6 +310,25 @@ export default function Matrix({ manifestos }) {
 						</button>
 						<button
 							name='space-between-increase'
+							onClick={(e) => handleChange(e)}
+							style={{ width: '50%' }}
+						>
+							+
+						</button>
+					</span>
+				</div>
+				<div className='single-input'>
+					<label htmlFor='space-between'>Last manifestos</label>
+					<span name='space-between' className='control-buttons'>
+						<button
+							name='last-manifestos-decrease'
+							onClick={(e) => handleChange(e)}
+							style={{ width: '50%' }}
+						>
+							-
+						</button>
+						<button
+							name='last-manifestos-increase'
 							onClick={(e) => handleChange(e)}
 							style={{ width: '50%' }}
 						>
