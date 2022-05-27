@@ -255,119 +255,121 @@ export default function Matrix({ manifestos }) {
 					<br />
 					{/* Frames: {frames} */}
 				</div>
-				<div className='single-input'>
-					<label htmlFor='animation-speed'>Animation Speed</label>
-					<span className='control-buttons'>
-						<button
-							name='anim-speed-decrease'
-							onClick={(e) => handleChange(e)}
-							style={{ width: '50%' }}
-						>
-							-
-						</button>
-						<button
-							name='anim-speed-increase'
-							onClick={(e) => handleChange(e)}
-							style={{ width: '50%' }}
-						>
-							+
-						</button>
-					</span>
-				</div>
-				<div className='single-input'>
-					<label htmlFor='trail'>Trail</label>
-					<span className='control-buttons'>
-						<button
-							name='trail-length-decrease'
-							onClick={(e) => handleChange(e)}
-							style={{ width: '50%' }}
-						>
-							-
-						</button>
-						<button
-							name='trail-length-increase'
-							onClick={(e) => handleChange(e)}
-							style={{ width: '50%' }}
-						>
-							+
-						</button>
-					</span>
-				</div>
-				<div className='single-input'>
-					<label htmlFor='density'>Density</label>
-					<span name='density' className='control-buttons'>
-						<button
-							name='text-density-decrease'
-							onClick={(e) => handleChange(e)}
-							style={{ width: '50%' }}
-						>
-							-
-						</button>
-						<button
-							name='text-density-increase'
-							onClick={(e) => handleChange(e)}
-							style={{ width: '50%' }}
-						>
-							+
-						</button>
-					</span>
-				</div>
-				<div className='single-input'>
-					<label htmlFor='space-between'>Space Between</label>
-					<span name='space-between' className='control-buttons'>
-						<button
-							name='space-between-decrease'
-							onClick={(e) => handleChange(e)}
-							style={{ width: '50%' }}
-						>
-							-
-						</button>
-						<button
-							name='space-between-increase'
-							onClick={(e) => handleChange(e)}
-							style={{ width: '50%' }}
-						>
-							+
-						</button>
-					</span>
-				</div>
-				<div className='single-input'>
-					<label htmlFor='last-manifestos'>Last manifestos</label>
-					<span name='last-manifestos' className='control-buttons'>
-						<button
-							name='last-manifestos-decrease'
-							onClick={(e) => handleChange(e)}
-							style={{ width: '50%' }}
-						>
-							-
-						</button>
-						<button
-							name='last-manifestos-increase'
-							onClick={(e) => handleChange(e)}
-							style={{ width: '50%' }}
-						>
-							+
-						</button>
-					</span>
-				</div>
-				<div className='single-input'>
-					<label htmlFor='font-size'>Font Size</label>
-					<span name='font-size' className='control-buttons'>
-						<button
-							name='font-size-decrease'
-							onClick={(e) => handleChange(e)}
-							style={{ width: '50%' }}
-						>
-							-
-						</button>
-						<button
-							name='font-size-increase'
-							onClick={(e) => handleChange(e)}
-							style={{ width: '50%' }}
-						>
-							+
-						</button>
-					</span>
+				<div className='button-input-container'>
+					<div className='single-input'>
+						<label htmlFor='animation-speed'>Animation Speed</label>
+						<span className='control-buttons'>
+							<button
+								name='anim-speed-decrease'
+								onClick={(e) => handleChange(e)}
+								style={{ width: '50%' }}
+							>
+								-
+							</button>
+							<button
+								name='anim-speed-increase'
+								onClick={(e) => handleChange(e)}
+								style={{ width: '50%' }}
+							>
+								+
+							</button>
+						</span>
+					</div>
+					<div className='single-input'>
+						<label htmlFor='trail'>Trail</label>
+						<span className='control-buttons'>
+							<button
+								name='trail-length-decrease'
+								onClick={(e) => handleChange(e)}
+								style={{ width: '50%' }}
+							>
+								-
+							</button>
+							<button
+								name='trail-length-increase'
+								onClick={(e) => handleChange(e)}
+								style={{ width: '50%' }}
+							>
+								+
+							</button>
+						</span>
+					</div>
+					<div className='single-input'>
+						<label htmlFor='density'>Density</label>
+						<span name='density' className='control-buttons'>
+							<button
+								name='text-density-decrease'
+								onClick={(e) => handleChange(e)}
+								style={{ width: '50%' }}
+							>
+								-
+							</button>
+							<button
+								name='text-density-increase'
+								onClick={(e) => handleChange(e)}
+								style={{ width: '50%' }}
+							>
+								+
+							</button>
+						</span>
+					</div>
+					<div className='single-input'>
+						<label htmlFor='space-between'>Space Between</label>
+						<span name='space-between' className='control-buttons'>
+							<button
+								name='space-between-decrease'
+								onClick={(e) => handleChange(e)}
+								style={{ width: '50%' }}
+							>
+								-
+							</button>
+							<button
+								name='space-between-increase'
+								onClick={(e) => handleChange(e)}
+								style={{ width: '50%' }}
+							>
+								+
+							</button>
+						</span>
+					</div>
+					<div className='single-input'>
+						<label htmlFor='last-manifestos'>Last manifestos</label>
+						<span name='last-manifestos' className='control-buttons'>
+							<button
+								name='last-manifestos-decrease'
+								onClick={(e) => handleChange(e)}
+								style={{ width: '50%' }}
+							>
+								-
+							</button>
+							<button
+								name='last-manifestos-increase'
+								onClick={(e) => handleChange(e)}
+								style={{ width: '50%' }}
+							>
+								+
+							</button>
+						</span>
+					</div>
+					<div className='single-input'>
+						<label htmlFor='font-size'>Font Size</label>
+						<span name='font-size' className='control-buttons'>
+							<button
+								name='font-size-decrease'
+								onClick={(e) => handleChange(e)}
+								style={{ width: '50%' }}
+							>
+								-
+							</button>
+							<button
+								name='font-size-increase'
+								onClick={(e) => handleChange(e)}
+								style={{ width: '50%' }}
+							>
+								+
+							</button>
+						</span>
+					</div>
 				</div>
 				<span className='control-buttons'>
 					<label htmlFor='symbols-color'>Symbols </label>

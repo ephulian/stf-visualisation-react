@@ -133,6 +133,17 @@ h4 {
 	/* border-right: 1px solid black; */
 }
 
+.button-input-container {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 2rem;
+	margin-top: -25px;
+}
+
+.button-input-container button {
+	font-size: 20px;
+}
+
 .specs {
 	/* display: flex; */
 	/* flex-direction: column; */
