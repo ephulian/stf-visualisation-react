@@ -11,17 +11,16 @@ export default function Matrix({ manifestos }) {
 	const [phrase, setPhrase] = useState(getObjFromArr(text));
 	const [animPaused, setPause] = useState(false);
 
-	const [allElRefs, setAllElRefs] = useState([]);
-	const [slicedRefs, setSlicedRefs] = useState([]);
+	const [streamRefs, setStreamRefs] = useState([]);
 
 	const [animSpeed, setAnimSpeed] = useState(2);
-	const [trail, setTrail] = useState(6);
-	const [density, setDensity] = useState(5);
-	const [spaceBetween, setSpaceBetween] = useState(0);
-	const [backgroundCol, setBackgroundCol] = useState('#ffffff');
-	const [symbolsCol, setSymbolsCol] = useState('#000000');
+	const [trail, setTrail] = useState(11);
+	const [density, setDensity] = useState(3);
+	const [spaceBetween, setSpaceBetween] = useState(9);
+	const [backgroundCol, setBackgroundCol] = useState('#000000');
+	const [symbolsCol, setSymbolsCol] = useState('#0b9e00');
 
-	const [randomise, setRandomise] = useState(true);
+	const [randomise, setRandomise] = useState(false);
 	const [controller, setController] = useState('flex');
 
 	const handleChange = (e) => {
@@ -73,6 +72,12 @@ export default function Matrix({ manifestos }) {
 		}
 	};
 
+	// Loop over to beggining if number exceeds array length
+	const addDifferent = (arrayLength, ind, num) => {
+		const randomIndex = phrase[`${ind}`] + num;
+		return ((randomIndex % arrayLength) + arrayLength) % arrayLength;
+	};
+
 	useEffect(() => {
 		const animate = () => {
 			setFrames((prevState) =>
@@ -87,15 +92,15 @@ export default function Matrix({ manifestos }) {
 	useEffect(() => {
 		if (!animPaused) {
 			if (frames > 119) {
-				setAllElRefs((allElRefs) =>
-					Array(text.length)
+				// Generate an array of refs equal to density
+				setStreamRefs((streamRefs) =>
+					Array(density)
 						.fill()
-						.map((_, i) => allElRefs[i] || createRef())
+						.map((_, i) => streamRefs[i] || createRef())
 				);
 
-				// Slice all refs to allow text density adjustment
-				setSlicedRefs(allElRefs.slice(-density));
-				slicedRefs.forEach((ref) => {
+				// Generate stream for every ref
+				streamRefs.forEach((ref) => {
 					// Assign random X and Y values between 0 and window H/W
 					let currentYPos = randInRange(window.innerHeight);
 					let currentXPos = randInRange(window.innerWidth);
@@ -157,12 +162,6 @@ export default function Matrix({ manifestos }) {
 		}
 	}, [frames]);
 
-	// Loop over to beggining if number exceeds array length
-	const addDifferent = (arrayLength, ind, num) => {
-		const randomIndex = phrase[`${ind}`] + num;
-		return ((randomIndex % arrayLength) + arrayLength) % arrayLength;
-	};
-
 	return (
 		<>
 			<div
@@ -173,7 +172,7 @@ export default function Matrix({ manifestos }) {
 				className='canvas-container'
 			>
 				{' '}
-				{slicedRefs.map((ref, index) => {
+				{streamRefs.map((ref, index) => {
 					return (
 						<div ref={ref} key={index} id={index} className='single-stream'>
 							<div className=''>
@@ -196,6 +195,7 @@ export default function Matrix({ manifestos }) {
 										);
 									})}
 								<h1
+									name='leading'
 									style={{ opacity: '1', marginTop: `${spaceBetween}px`, color: `${symbolsCol}` }}
 								>
 									{text[phrase[`${index}`]]}
