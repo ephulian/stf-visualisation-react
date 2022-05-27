@@ -96,12 +96,12 @@ html {
 }
 
 h1 {
-	font-size: 15px;
+	/* font-size: 15px; */
 	margin-block-start: 0px;
 	margin-block-end: 0px;
 	margin-inline-start: 0px;
 	margin-inline-end: 0px;
-	line-height: 15px;
+	/* line-height: 15px; */
 }
 
 .table {

@@ -2,22 +2,22 @@ import React, { createRef, useEffect, useRef, useState } from 'react';
 import { randInRange, getObjFromArr } from './utils';
 
 export default function Matrix({ manifestos }) {
-	const numbers = Array.from(Array(100).keys());
-
 	const requestRef = useRef();
+
 	const [frames, setFrames] = useState(0);
 	const [positions, setPositions] = useState({});
 	const [animPaused, setPause] = useState(false);
 
 	const [streamRefs, setStreamRefs] = useState([]);
-	const [last, setLast] = useState(50);
 
 	const [animSpeed, setAnimSpeed] = useState(2);
 	const [trail, setTrail] = useState(8);
 	const [density, setDensity] = useState(3);
 	const [spaceBetween, setSpaceBetween] = useState(5);
 	const [backgroundCol, setBackgroundCol] = useState('#000000');
-	const [symbolsCol, setSymbolsCol] = useState('#0ecc00');
+	const [symbolsCol, setSymbolsCol] = useState('#0ECC00');
+	const [last, setLast] = useState(50);
+	const [fontSize, setFontSize] = useState(15);
 
 	const [randomise, setRandomise] = useState(false);
 	const [controller, setController] = useState('flex');
@@ -25,6 +25,7 @@ export default function Matrix({ manifestos }) {
 	const text = manifestos.slice(-last);
 	// const text = numbers.slice(-last);
 	const [phrase, setPhrase] = useState(getObjFromArr(text));
+
 	const handleChange = (e) => {
 		e.preventDefault();
 		switch (e.currentTarget.name) {
@@ -57,6 +58,12 @@ export default function Matrix({ manifestos }) {
 				break;
 			case 'last-manifestos-decrease':
 				setLast((currentLast) => (currentLast -= 1));
+				break;
+			case 'font-size-increase':
+				setFontSize((currentFontSize) => (currentFontSize += 1));
+				break;
+			case 'font-size-decrease':
+				setFontSize((currentFontSize) => (currentFontSize -= 1));
 				break;
 			case 'symbols-color':
 				setSymbolsCol(e.currentTarget.value);
@@ -151,7 +158,7 @@ export default function Matrix({ manifestos }) {
 								...prevState,
 								[ref.current.id]: {
 									x: positions[`${ref.current.id}`].x,
-									y: positions[`${ref.current.id}`].y + 15 + spaceBetween,
+									y: positions[`${ref.current.id}`].y + fontSize + spaceBetween,
 								},
 							};
 						});
@@ -200,9 +207,10 @@ export default function Matrix({ manifestos }) {
 												key={el}
 												style={{
 													opacity: `${(1 / (el + 1)).toFixed(2)}`,
-													// opacity: `0.${el - 1}`,
 													marginTop: `${spaceBetween}px`,
 													color: `${symbolsCol}`,
+													fontSize: `${fontSize}px`,
+													lineHeight: `${fontSize}px`,
 												}}
 											>
 												{text[pickRandomIndex(text.length, index, randomise ? el : 0)]}
@@ -211,7 +219,13 @@ export default function Matrix({ manifestos }) {
 									})}
 								<h1
 									name='leading'
-									style={{ opacity: '1', marginTop: `${spaceBetween}px`, color: `${symbolsCol}` }}
+									style={{
+										opacity: '1',
+										marginTop: `${spaceBetween}px`,
+										color: `${symbolsCol}`,
+										fontSize: `${fontSize}px`,
+										lineHeight: `${fontSize}px`,
+									}}
 								>
 									{text[phrase[`${index}`]]}
 								</h1>
@@ -226,7 +240,7 @@ export default function Matrix({ manifestos }) {
 					<input type='range' value='10' id='falling-speed' name='falling-speed' min='0' max='30' />
 				</div> */}
 				<div className='specs'>
-					<h1 style={{ textDecoration: 'underline' }}>Current Specifications</h1>
+					<h1 style={{ textDecoration: 'underline', fontSize: '22px' }}>Current Specifications</h1>
 					<br />
 					Animation Speed: {animSpeed}
 					<br />
@@ -318,8 +332,8 @@ export default function Matrix({ manifestos }) {
 					</span>
 				</div>
 				<div className='single-input'>
-					<label htmlFor='space-between'>Last manifestos</label>
-					<span name='space-between' className='control-buttons'>
+					<label htmlFor='last-manifestos'>Last manifestos</label>
+					<span name='last-manifestos' className='control-buttons'>
 						<button
 							name='last-manifestos-decrease'
 							onClick={(e) => handleChange(e)}
@@ -329,6 +343,25 @@ export default function Matrix({ manifestos }) {
 						</button>
 						<button
 							name='last-manifestos-increase'
+							onClick={(e) => handleChange(e)}
+							style={{ width: '50%' }}
+						>
+							+
+						</button>
+					</span>
+				</div>
+				<div className='single-input'>
+					<label htmlFor='font-size'>Font Size</label>
+					<span name='font-size' className='control-buttons'>
+						<button
+							name='font-size-decrease'
+							onClick={(e) => handleChange(e)}
+							style={{ width: '50%' }}
+						>
+							-
+						</button>
+						<button
+							name='font-size-increase'
 							onClick={(e) => handleChange(e)}
 							style={{ width: '50%' }}
 						>
