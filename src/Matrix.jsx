@@ -14,11 +14,11 @@ export default function Matrix({ manifestos }) {
 	const [streamRefs, setStreamRefs] = useState([]);
 
 	const [animSpeed, setAnimSpeed] = useState(2);
-	const [trail, setTrail] = useState(11);
+	const [trail, setTrail] = useState(8);
 	const [density, setDensity] = useState(3);
-	const [spaceBetween, setSpaceBetween] = useState(9);
+	const [spaceBetween, setSpaceBetween] = useState(5);
 	const [backgroundCol, setBackgroundCol] = useState('#000000');
-	const [symbolsCol, setSymbolsCol] = useState('#0b9e00');
+	const [symbolsCol, setSymbolsCol] = useState('#0ecc00');
 
 	const [randomise, setRandomise] = useState(false);
 	const [controller, setController] = useState('flex');
@@ -86,6 +86,7 @@ export default function Matrix({ manifestos }) {
 			requestRef.current = requestAnimationFrame(animate);
 		};
 		requestRef.current = requestAnimationFrame(animate);
+
 		return () => cancelAnimationFrame(requestRef.current);
 	}, [animSpeed]);
 
@@ -102,12 +103,12 @@ export default function Matrix({ manifestos }) {
 				// Generate stream for every ref
 				streamRefs.forEach((ref) => {
 					// Assign random X and Y values between 0 and window H/W
-					let currentYPos = randInRange(window.innerHeight);
-					let currentXPos = randInRange(window.innerWidth);
+					let randomYPos = randInRange(window.innerHeight);
+					let randomXPos = randInRange(window.innerWidth);
 
 					// Save to state object with ids as keys
 					setPositions((prevState) => {
-						return { ...prevState, [ref.current.id]: { x: currentXPos, y: currentYPos } };
+						return { ...prevState, [ref.current.id]: { x: randomXPos, y: randomYPos } };
 					});
 
 					if (randomise) {
@@ -127,7 +128,13 @@ export default function Matrix({ manifestos }) {
 						positions[`${ref.current.id}`] &&
 						positions[`${ref.current.id}`].y < window.innerHeight
 					) {
-						ref.current.style.transform = `translateX(${positions[`${ref.current.id}`].x}px)`;
+						// ref.current.style.transform = `translateX(${positions[`${ref.current.id}`].x}px)`;
+						const element = ref.current.firstChild.firstChild.offsetWidth;
+						ref.current.style.transform = `translateX(${
+							positions[`${ref.current.id}`].x + element > window.innerWidth
+								? positions[`${ref.current.id}`].x - element
+								: positions[`${ref.current.id}`].x
+						}px)`;
 						ref.current.firstChild.style.transform = `translateY(${
 							positions[`${ref.current.id}`].y
 						}px)`;
@@ -145,7 +152,7 @@ export default function Matrix({ manifestos }) {
 							return {
 								...prevState,
 								[ref.current.id]: {
-									x: randInRange(window.innerWidth),
+									x: randomXPos,
 									y: randInRange(window.innerHeight) - window.innerHeight,
 								},
 							};

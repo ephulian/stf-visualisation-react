@@ -87,7 +87,9 @@ html {
 
 .single-stream {
 	position: absolute;
-	max-width: 150ch;
+	/* max-width: 150ch; */
+	/* max-width: 500px; */
+	overflow: hidden;
 	/* border: 2px solid red; */
 	height: 100vh;
 	text-align: center;
