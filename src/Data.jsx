@@ -1,4 +1,4 @@
-import { collection, onSnapshot } from 'firebase/firestore';
+import { collection, deleteDoc, doc, onSnapshot } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import { db } from './firebase-config';
 
@@ -8,7 +8,9 @@ export default function Data() {
 
 	const getData = () => {
 		onSnapshot(collection(db, 'answers'), (snapshot) => {
-			const snapshotData = snapshot.docs.map((doc) => doc.data());
+			const snapshotData = snapshot.docs.map((doc) => {
+				return { ...doc.data(), id: doc.id };
+			});
 			setData(snapshotData);
 			setLoading(false);
 		});
@@ -27,6 +29,10 @@ export default function Data() {
 			return 1;
 		}
 		return 0;
+	};
+
+	const deleteData = async (docID) => {
+		await deleteDoc(doc(db, 'answers', docID));
 	};
 
 	useEffect(() => {
@@ -54,7 +60,7 @@ export default function Data() {
 						<h5>Time</h5>
 					</div>
 					<div className='cell'>
-						<h5>NFT</h5>
+						<h5>Delete</h5>
 					</div>
 				</div>
 				{loading
@@ -66,7 +72,7 @@ export default function Data() {
 								return (
 									<div key={index} className='row'>
 										<div className='cell'>
-											<h4>{point.createdAt}</h4>
+											<h4>{point.id}</h4>
 										</div>
 										<div className='cell'>
 											<h4>
@@ -87,7 +93,7 @@ export default function Data() {
 											<h4>{unixToDate(point.createdAt)}</h4>
 										</div>
 										<div className='cell'>
-											<h4>Yes</h4>
+											<h4 onClick={(e) => deleteData(point.id)}>X</h4>
 										</div>
 									</div>
 								);

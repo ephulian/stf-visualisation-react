@@ -112,7 +112,7 @@ h1 {
 
 .row {
 	display: grid;
-	grid-template-columns: 10% 15% 15% 44% 12% 4%;
+	grid-template-columns: 16% 12% 12% 44% 12% 4%;
 	flex-grow: 1;
 	justify-content: space-between;
 	min-height: 35px;
