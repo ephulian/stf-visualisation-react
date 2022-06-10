@@ -16,7 +16,8 @@ function App() {
 	const getManifestos = () => {
 		setLoading(true);
 		onSnapshot(collection(db, 'answers'), (snapshot) => {
-			const man = snapshot.docs.map((doc) => doc.data().manifesto);
+			// const man = snapshot.docs.map((doc) => doc.data().manifesto);
+			const man = snapshot.docs.map((doc) => doc.data());
 			setManifestos(man);
 			setLoading(false);
 		});

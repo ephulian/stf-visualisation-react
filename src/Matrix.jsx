@@ -22,7 +22,20 @@ export default function Matrix({ manifestos }) {
 	const [randomise, setRandomise] = useState(false);
 	const [controller, setController] = useState('flex');
 
-	const text = manifestos.slice(-last);
+	const compare = (a, b) => {
+		if (a.createdAt < b.createdAt) {
+			return -1;
+		}
+		if (a.createdAt > b.createdAt) {
+			return 1;
+		}
+		return 0;
+	};
+
+	manifestos.sort(compare);
+
+	const text = manifestos.map(({ manifesto }) => manifesto).slice(-last);
+
 	// const text = numbers.slice(-last);
 	const [phrase, setPhrase] = useState(getObjFromArr(text));
 
@@ -183,6 +196,8 @@ export default function Matrix({ manifestos }) {
 			}
 		}
 	}, [frames]);
+
+	// console.log(streamRefs);
 
 	return (
 		<>
