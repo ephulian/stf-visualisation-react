@@ -53,9 +53,9 @@ export default function Data() {
 					<div className='cell'>
 						<h5>Time</h5>
 					</div>
-					<div className='cell'>
+					{/* <div className='cell'>
 						<h5>NFT</h5>
-					</div>
+					</div> */}
 					<div className='cell'>
 						<h5>Delete</h5>
 					</div>
@@ -77,9 +77,9 @@ export default function Data() {
 										<div className='cell'>
 											<h4>{unixToDate(point.createdAt)}</h4>
 										</div>
-										<div className='cell'>
+										{/* <div className='cell'>
 											<h4>{point.nft}</h4>
-										</div>
+										</div> */}
 										<div className='cell'>
 											<h4 onClick={(e) => deleteData(point.id)}>X</h4>
 										</div>
