@@ -26,6 +26,11 @@ export default function Data() {
 		return 0;
 	};
 
+	const unixToDate = (timestamp) => {
+		const date = new Date(timestamp);
+		return date.toString().slice(4, -31);
+	};
+
 	const deleteData = async (docID) => {
 		await deleteDoc(doc(db, 'nft', docID));
 	};
@@ -46,6 +51,9 @@ export default function Data() {
 						<h5>Manifesto</h5>
 					</div>
 					<div className='cell'>
+						<h5>Time</h5>
+					</div>
+					<div className='cell'>
 						<h5>Delete</h5>
 					</div>
 				</div>
@@ -62,6 +70,9 @@ export default function Data() {
 										</div>
 										<div className='cell'>
 											<h4>{point.manifesto}</h4>
+										</div>
+										<div className='cell'>
+											<h4>{unixToDate(point.createdAt)}</h4>
 										</div>
 										<div className='cell'>
 											<h4 onClick={(e) => deleteData(point.id)}>X</h4>
