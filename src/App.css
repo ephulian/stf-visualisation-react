@@ -110,9 +110,23 @@ h1 {
 	margin: 15px;
 }
 
+.nft-table {
+	border-top: 1px solid black;
+	border-right: 1px solid black;
+	margin: 15px;
+}
+
 .row {
 	display: grid;
 	grid-template-columns: 16% 12% 12% 44% 12% 4%;
+	flex-grow: 1;
+	justify-content: space-between;
+	min-height: 35px;
+}
+
+.nft-row {
+	display: grid;
+	grid-template-columns: 16% 74% 10%;
 	flex-grow: 1;
 	justify-content: space-between;
 	min-height: 35px;
